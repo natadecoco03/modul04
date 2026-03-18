@@ -67,6 +67,7 @@
             <thead class="table-dark">
                 <tr>
                     <th>No</th>
+                    <th>Cover</th> <!-- baru -->
                     <th>Judul</th>
                     <th>Penulis</th>
                     <th>Tahun</th>
@@ -78,24 +79,28 @@
                 @foreach($books as $key => $book)
                 <tr>
                     <td>{{ $key + 1 }}</td>
+
+                    <!-- ini tempatnya -->
+                    <td>
+                        @if($book->image)
+                            <img src="{{ asset('storage/' . $book->image) }}" class="img-fluid rounded" width="60">
+                        @else
+                            <span>No Cover</span>
+                        @endif
+                    </td>
+
                     <td>{{ $book->judul }}</td>
                     <td>{{ $book->penulis }}</td>
                     <td>{{ $book->tahun_terbit }}</td>
+                    <td><span class="badge bg-info">{{ $book->stok }}</span></td>
                     <td>
-                        <span class="badge bg-info">{{ $book->stok }}</span>
-                    </td>
-                    <td>
-                        <a href="{{ route('books.edit',$book->id) }}" 
-                           class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('books.edit',$book->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                        <form action="{{ route('books.destroy',$book->id) }}" 
-                              method="POST" class="d-inline">
+                        <form action="{{ route('books.destroy',$book->id) }}" method="POST" class="d-inline">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-danger btn-sm"
-                                onclick="return confirm('Yakin hapus data?')">
-                                Hapus
-                            </button>
+                                onclick="return confirm('Yakin hapus data?')">Hapus</button>
                         </form>
                     </td>
                 </tr>

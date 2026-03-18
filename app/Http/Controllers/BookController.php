@@ -53,13 +53,21 @@ class BookController extends Controller
             'judul' => 'required',
             'penulis' => 'required',
             'tahun_terbit' => 'required|numeric',
-            'stok' => 'required|numeric'
+            'stok' => 'required|numeric',
+            'image' => 'nullable|image|max:2048', // validasi image max 2MB
         ]);
 
-        Book::create($request->all());
+        $data = $request->all();
+
+        // Upload cover image jika ada
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('books', 'public');
+        }
+
+        Book::create($data);
 
         return redirect()->route('books.index')
-                ->with('success','Data berhasil ditambahkan');
+                        ->with('success', 'Data berhasil ditambahkan');
     }
 
     public function edit(Book $book)
@@ -75,13 +83,21 @@ class BookController extends Controller
             'judul' => 'required',
             'penulis' => 'required',
             'tahun_terbit' => 'required|numeric',
-            'stok' => 'required|numeric'
+            'stok' => 'required|numeric',
+            'image' => 'nullable|image|max:2048',
         ]);
 
-        $book->update($request->all());
+        $data = $request->all();
+
+        // Upload cover image jika ada
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('books', 'public');
+        }
+
+        $book->update($data);
 
         return redirect()->route('books.index')
-                ->with('success','Data berhasil diupdate');
+                        ->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy(Book $book)

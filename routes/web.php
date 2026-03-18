@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Halaman Home baru
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// CRUD Books
 Route::resource('/books', BookController::class);
 
+// CRUD Categories
 Route::resource('/categories', CategoryController::class);
