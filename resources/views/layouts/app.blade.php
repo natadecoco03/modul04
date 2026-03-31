@@ -23,6 +23,15 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('books.index') }}">Books</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('categories.index') }}">Categories</a></li>
+                 <!-- 🔓 Logout -->
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button class="btn btn-link nav-link" style="text-decoration: none;">
+                            🚪 Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
